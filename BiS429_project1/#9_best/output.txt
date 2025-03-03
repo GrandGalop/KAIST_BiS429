@@ -1,0 +1,42 @@
+#배치30 에폭100 채널30 얼리스탑(3%) lrdecay(x0.9)
+
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(in_channels = 1, out_channels = 32, kernel_size = 5,stride = 1, padding=2)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(in_channels = 32, out_channels = 4, kernel_size = 3,stride = 1, padding=1)
+        self.fc1 = nn.Linear(32 * 32 * 4, 64)
+        self.fc2 = nn.Linear(64, 8)
+        self.fc3 = nn.Linear(8, 2)
+        self.softmax=nn.Softmax(dim=1)
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+
+        x = x.view(-1, 32 * 32 * 4)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return self.softmax(x)
+    
+net = Net() # make an instance
+print(net) # check the architecture
+print(net(torch.randn(10,1,128,128))) # see the network works correctly with an arbitrary input
+
+        if epoch>=10:
+            if abs(val_acc_epoch[-1] - val_acc_epoch[-2]) <= 0.005:
+                Learning_rate  = Learning_rate * 0.9
+        
+        if training_accuracy >=0.95 and abs(training_accuracy-validation_accuracy)<=0.03:
+            break
+
+Epoch  71
+Training loss (average) : 0.15316947052876154
+Training accuracy       : 95.27777777777777 %
+Validation loss (average) : 0.18246564269065857
+Validation accuracy       : 92.72727272727272 %
+tensor([0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1,
+        1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1,
+        0, 1])
