@@ -73,4 +73,4 @@ The project involves:
   $$
   \frac{\partial F^*}{\partial b} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial b}
   $$
-
+$\sqrt{3x-1}+(1+x)^2$
