@@ -1,6 +1,7 @@
 # **README - BiS429 (뇌기반 기계지능) Term Projects**
 ## **Overview**
 Project 1: Medical Image Diagnosis Using Deep Learning
+
 Project 2: Predictive Coding training algorithm implementation for MNIST classifing
 
 ### **Project 1**
