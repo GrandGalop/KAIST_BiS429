@@ -65,5 +65,5 @@ The project involves:
 - **Error Minimization:**  
   $\epsilon_i = x_i - \mu_i$
 - **Gradient Updates for Weights and Biases:**  
-  $\frac{\partial F^*}{\partial W} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial W}$
-  $\frac{\partial F^*}{\partial b} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial b}$
+  $\frac{\partial F^*}{\partial W} = -\sum_i \epsilon_i \frac{\partial \epsilon_i}{\partial W}$
+  $\frac{\partial F^*}{\partial b} = -\sum_i \epsilon_i \frac{\partial \epsilon_i}{\partial b}$
