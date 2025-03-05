@@ -61,16 +61,9 @@ The project involves:
 
 #### **Key Equations**
 - **Prediction Update:**  
-  $ p(y) = \sum p(y | x) p(x) $
+  $p(y) = \sum p(y | x) p(x)$
 - **Error Minimization:**  
-  $$
-  \epsilon_i = x_i - \mu_i
-  $$
+  $\epsilon_i = x_i - \mu_i$
 - **Gradient Updates for Weights and Biases:**  
-  $$
-  \frac{\partial F^*}{\partial W} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial W}
-  $$
-  $$
-  \frac{\partial F^*}{\partial b} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial b}
-  $$
-$\sqrt{3x-1}+(1+x)^2$
+  $\frac{\partial F^*}{\partial W} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial W}$
+  $\frac{\partial F^*}{\partial b} = -\sum \Sigma_i \epsilon_i \frac{\partial \epsilon_i}{\partial b}$
