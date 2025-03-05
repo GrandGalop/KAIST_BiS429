@@ -61,9 +61,7 @@ The project involves:
 
 #### **Key Equations**
 - **Prediction Update:**  
-  $$
-  p(y) = \sum p(y | x) p(x)
-  $$
+  $$ p(y) = \sum p(y | x) p(x) $$
 - **Error Minimization:**  
   $$
   \epsilon_i = x_i - \mu_i
