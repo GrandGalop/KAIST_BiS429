@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+
+# datasets downloaded / extracted at runtime
+BiS429_project1/data/training_images/
+BiS429_project1/data/test_images/
+BiS429_project2/MNIST_train/
+BiS429_project2/MNIST_test/
