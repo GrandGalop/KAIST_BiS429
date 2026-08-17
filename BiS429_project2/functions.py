@@ -1,54 +1,53 @@
-# pylint: disable=not-callable
-# pylint: disable=no-member
+"""Activation functions, their derivatives and inverses.
 
-import torch
+``f`` and ``f_deriv`` operate on torch tensors shaped ``(activation_size,
+batch_size)``. ``f_inv`` is applied to the raw numpy images during
+preprocessing, before they are moved onto the device.
+"""
+
 import numpy as np
+import torch
 
 LINEAR = "LINEAR"
 TANH = "TANH"
 LOGSIG = "LOGSIG"
 
+EPS = 1e-7
+
+
+def _logsig(x):
+    return 1.0 / (1.0 + torch.exp(-x))
+
 
 def f(x, act_fn):
-    """ (activation_size, batch_size) """
-    if act_fn is LINEAR:
-        m = x
-    elif act_fn is TANH:
-        m = torch.tanh(x)
-    elif act_fn is LOGSIG:
-        return 1. / (torch.ones_like(x) + torch.exp(-x))
-    else:
-        raise ValueError(f"{act_fn} not supported")
-    return m
+    """Apply the activation function."""
+    if act_fn == LINEAR:
+        return x
+    if act_fn == TANH:
+        return torch.tanh(x)
+    if act_fn == LOGSIG:
+        return _logsig(x)
+    raise ValueError(f"{act_fn} not supported")
 
 
 def f_deriv(x, act_fn):
-    """ (activation_size, batch_size) """
-    if act_fn is LINEAR:
-        deriv = np.ones(x.shape)
-    elif act_fn is TANH:
-        deriv = torch.ones_like(x) - torch.tanh(x) ** 2
-    elif act_fn is LOGSIG:
-        """ TODO """
-        f = 1. / (torch.ones_like(x) + torch.exp(-x))
-        deriv = torch.mul(f, (torch.ones_like(x) - f))
-    else:
-        raise ValueError(f"{act_fn} not supported")
-    return deriv
+    """Derivative of the activation function, evaluated elementwise at ``x``."""
+    if act_fn == LINEAR:
+        return torch.ones_like(x)
+    if act_fn == TANH:
+        return 1.0 - torch.tanh(x) ** 2
+    if act_fn == LOGSIG:
+        sigma = _logsig(x)
+        return sigma * (1.0 - sigma)
+    raise ValueError(f"{act_fn} not supported")
 
 
 def f_inv(x, act_fn):
-    """ (activation_size, batch_size) """
-    if act_fn is LINEAR:
-        m = x
-    elif act_fn is TANH:
-        num = np.ones(x.shape) + x
-        div = (np.ones(x.shape) - x) + 1e-7
-        m = 0.5 * np.log(np.divide(num, div))
-    elif act_fn is LOGSIG:
-        """ TODO """
-        div = (np.ones(x.shape) - x) + 1e-7
-        m = np.log(np.divide(x, div) + 1e-7)
-    else:
-        raise ValueError(f"{act_fn} not supported")
-    return m
+    """Inverse of the activation function, used to un-squash the input images."""
+    if act_fn == LINEAR:
+        return x
+    if act_fn == TANH:
+        return 0.5 * np.log((1.0 + x) / (1.0 - x + EPS))
+    if act_fn == LOGSIG:
+        return np.log(x / (1.0 - x + EPS) + EPS)
+    raise ValueError(f"{act_fn} not supported")
